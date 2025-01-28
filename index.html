@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <!-- Add Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Fira+Code&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto+Mono&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="note.png" type="image/png">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <div class="loader">
+            <div class="loader-icon"></div>
+            <div class="loader-text">Loading Notes...</div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-book"></i>Notes</h2>
+                <div class="header-actions">
+                    <button class="header-button" onclick="createNewNote()" title="New Note">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="header-button" onclick="toggleCollapse()" title="Toggle Sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search notes..." oninput="searchNotes(this.value)">
+            </div>
+            <ul class="note-list" id="notesList"></ul>
+        </div>
+
+        <!-- Add toggle button HTML after the sidebar div -->
+        <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="toolbar" id="toolbar">
+                <button onclick="createNewNote()">
+                    <i class="fas fa-plus"></i> New Note
+                </button>
+                <div class="format-group">
+                    <button onclick="toggleBold()"><i class="fas fa-bold"></i></button>
+                    <button onclick="toggleItalic()"><i class="fas fa-italic"></i></button>
+                    <button onclick="toggleUnderline()"><i class="fas fa-underline"></i></button>
+                    <button onclick="toggleList('bullet')"><i class="fas fa-list-ul"></i></button>
+                    <button onclick="toggleList('number')"><i class="fas fa-list-ol"></i></button>
+                    <button onclick="addCheckbox()"><i class="fas fa-check-square"></i></button>
+                </div>
+                <div class="format-group indent-buttons">
+                    <button onclick="indentContent('decrease')" title="Decrease indent">
+                        <i class="fas fa-outdent"></i>
+                    </button>
+                    <button onclick="indentContent('increase')" title="Increase indent">
+                        <i class="fas fa-indent"></i>
+                    </button>
+                </div>
+                <select id="font-select" class="font-select" onchange="changeFont()">
+                    <option value="Inter">Inter (Sans-serif)</option>
+                    <option value="Source">Source Sans Pro</option>
+                    <option value="Merriweather">Merriweather (Serif)</option>
+                    <option value="Playfair">Playfair Display</option>
+                    <option value="FiraCode">Fira Code (Mono)</option>
+                    <option value="RobotoMono">Roboto Mono</option>
+                </select>
+                <button onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button onclick="downloadNote()">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="editor-container" id="editor-container">
+                <div id="note-content" contenteditable="true"></div>
+            </div>
+            <div class="no-notes-wrapper" id="no-notes-wrapper">
+                <div class="no-notes-message" id="no-notes-message">
+                    <div class="no-notes-icon">
+                        <i class="fas fa-sticky-note"></i>
+                    </div>
+                    <p>No notes available. Create a new note to get started!</p>
+                    <button class="create-note-button" onclick="createNewNote()">Create New Note</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

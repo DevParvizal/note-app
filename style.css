@@ -1,0 +1,1238 @@
+:root {
+    --primary-color: #007AFF;
+    --sidebar-width: 250px;
+    --header-height: 60px;
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+/* Loading Screen */
+#loading {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+#loading .loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.loader-icon {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loader-text {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Dark Theme for Loading Screen */
+[data-theme="dark"] #loading {
+    background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+}
+
+[data-theme="dark"] .loader-icon {
+    border: 6px solid #333;
+    border-top: 6px solid var(--primary-color);
+}
+
+[data-theme="dark"] .loader-text {
+    color: #fff;
+}
+
+/* Main App Layout */
+.app-container {
+    display: none;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: #f5f5f5;
+    border-right: 1px solid #ddd;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+    transition: transform var(--transition-speed);
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.note-list {
+    list-style: none;
+}
+
+.note-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.note-item:hover {
+    background-color: #e9e9e9;
+}
+
+.note-item.active {
+    background-color: #e2e2e2;
+}
+
+/* Main Content Area */
+.main-content {
+    margin-left: var(--sidebar-width);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.toolbar {
+    height: var(--header-height);
+    padding: 10px 20px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toolbar button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    background: #f5f5f5;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.toolbar button:hover {
+    background: #e9e9e9;
+}
+
+.toolbar select {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.editor-container {
+    flex-grow: 1;
+    padding: 40px;
+    overflow-y: auto;
+    background: var(--bg-primary);
+}
+
+#note-content {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    min-height: calc(100vh - var(--header-height) - 80px);
+    outline: none;
+    padding: 0;
+}
+
+/* Dark Theme */
+.dark-theme {
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+.dark-theme .sidebar {
+    background: #2a2a2a;
+    border-right-color: #3a3a3a;
+}
+
+.dark-theme .note-item {
+    border-bottom-color: #3a3a3a;
+}
+
+.dark-theme .note-item:hover {
+    background-color: #333;
+}
+
+.dark-theme .toolbar {
+    background: #2a2a2a;
+    border-bottom-color: #3a3a3a;
+}
+
+.dark-theme .toolbar button {
+    background: #3a3a3a;
+    color: #fff;
+}
+
+.dark-theme .toolbar button:hover {
+    background: #444;
+}
+
+/* Search Bar */
+.search-bar {
+    padding: 10px 20px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* Dark Theme Fixes */
+.dark-theme .search-bar {
+    background: #2a2a2a;
+    border-bottom-color: #3a3a3a;
+}
+
+.dark-theme .search-bar input {
+    background: #3a3a3a;
+    border-color: #444;
+    color: #fff;
+}
+
+.dark-theme #note-content {
+    color: #fff;
+}
+
+.dark-theme .toolbar select {
+    background: #3a3a3a;
+    color: #fff;
+    border-color: #444;
+}
+
+/* Checkbox Style Enhancement */
+.task-checkbox {
+    width: 16px;
+    height: 16px;
+    margin: 4px 8px 0 0;
+    cursor: pointer;
+}
+
+/* Note Title Style */
+.note-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+
+.note-title:hover {
+    color: var(--primary-color);
+}
+
+/* Updated/New Styles */
+:root {
+    --primary-color: #007AFF;
+    --sidebar-width: 280px;
+    --header-height: 60px;
+    --transition-speed: 0.3s;
+    --sidebar-bg: #f5f5f5;
+    --main-bg: #ffffff;
+}
+
+.sidebar {
+    background: var(--sidebar-bg);
+    width: var(--sidebar-width);
+    border-right: 1px solid rgba(0,0,0,0.1);
+}
+
+.note-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+}
+
+.note-item:hover {
+    background-color: rgba(0,0,0,0.05);
+}
+
+.note-item.active {
+    background-color: rgba(0,0,0,0.08);
+}
+
+.note-item-content {
+    flex-grow: 1;
+}
+
+.note-title-edit {
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    background: transparent;
+    width: 100%;
+    padding: 2px 0;
+    margin-bottom: 4px;
+}
+
+.note-title-edit:focus {
+    outline: none;
+    border-bottom: 2px solid var (--primary-color);
+}
+
+.note-date {
+    font-size: 12px;
+    color: #666;
+}
+
+.note-actions {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.note-item:hover .note-actions {
+    opacity: 1;
+}
+
+.delete-btn {
+    padding: 4px 8px;
+    background: transparent;
+    border: none;
+    color: #ff3b30;
+    cursor: pointer;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.delete-btn:hover {
+    background: rgba(255,59,48,0.1);
+}
+
+.toolbar {
+    padding: 12px 20px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.toolbar button {
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid rgba(0,0,0,0.1);
+    color: #333;
+}
+
+.dark-theme {
+    --sidebar-bg: #1c1c1e;
+    --main-bg: #000000;
+}
+
+.dark-theme .note-title-edit {
+    color: #fff;
+}
+
+.dark-theme .note-date {
+    color: #999;
+}
+
+@keyframes slideOut {
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+.slide-out {
+    animation: slideOut 0.3s ease forwards;
+}
+
+/* List and Checkbox Formatting */
+#note-content ul,
+#note-content ol {
+    padding-left: 24px;
+    margin: 8px 0;
+}
+
+#note-content li {
+    padding: 4px 0;
+}
+
+.task-container {
+    display: flex;
+    align-items: flex-start;
+    padding: 4px 0;
+    margin: 4px 0;
+}
+
+.task-checkbox {
+    width: 16px;
+    height: 16px;
+    margin: 4px 8px 0 0;
+    cursor: pointer;
+}
+
+.task-text {
+    flex: 1;
+    padding: 0;
+    margin: 0;
+}
+
+/* Enhanced Variables */
+:root {
+    --primary-color: #007AFF;
+    --primary-light: rgba(0, 122, 255, 0.1);
+    --secondary-color: #5856D6;
+    --sidebar-width: 300px;
+    --header-height: 64px;
+    --transition-speed: 0.3s;
+    --sidebar-bg: #f8f8f8;
+    --main-bg: #ffffff;
+    --text-primary: #1c1c1e;
+    --text-secondary: #666666;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --hover-bg: rgba(0, 0, 0, 0.04);
+    --active-bg: rgba(0, 122, 255, 0.1);
+    --toolbar-bg: rgba(255, 255, 255, 0.95);
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-serif: 'Merriweather', Georgia, serif;
+    --font-mono: 'Fira Code', 'Roboto Mono', monospace;
+    --bg-primary: var(--main-bg);
+    --bg-secondary: var(--sidebar-bg);
+    --editor-bg: var(--main-bg);
+    --toolbar-bg-light: rgba(255, 255, 255, 0.95);
+    --toolbar-bg-dark: rgba(28, 28, 30, 0.95);
+}
+
+/* Enhanced Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    box-shadow: var(--shadow-sm);
+}
+
+.sidebar-header {
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+/* Enhanced Note Items */
+.note-item {
+    margin: 4px 8px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+}
+
+.note-item.active {
+    background: var(--active-bg);
+    border-left: none;
+}
+
+.note-title-edit {
+    font-size: 15px;
+    font-weight: 500;
+    padding: 4px 0;
+    margin-bottom: 6px;
+    transition: all var(--transition-speed);
+}
+
+/* Enhanced Toolbar */
+.toolbar {
+    padding: 12px 24px;
+    gap: 12px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center items horizontally */
+}
+
+.toolbar button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    background: var(--main-bg);
+    color: var(--text-primary);
+    transition: all var(--transition-speed);
+    border: 1px solid var(--border-color);
+}
+
+.toolbar button i {
+    font-size: 14px;
+}
+
+.toolbar button:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+    background: var(--hover-bg);
+}
+
+/* Format Buttons */
+.format-group {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: var(--hover-bg);
+    border-radius: 8px;
+}
+
+/* Enhanced Editor */
+.editor-container {
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    background: var(--editor-bg);
+}
+
+#note-content {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px 40px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: var(--editor-bg);
+}
+
+/* Enhanced Search Bar */
+.search-bar {
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--main-bg);
+    font-size: 14px;
+    transition: all var(--transition-speed);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.search-bar input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+/* Enhanced Delete Button */
+.delete-btn {
+    padding: 6px;
+    color: var (--danger-color);
+    opacity: 0;
+    transition: all 0.2s;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.delete-btn i {
+    font-size: 16px;
+}
+
+.note-item:hover .delete-btn {
+    opacity: 1;
+}
+
+/* Enhanced Checkbox */
+.task-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+}
+
+/* Enhanced Font Selector */
+.font-select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--main-bg);
+    color: var(--text-primary);
+    font-size: 14px;
+    min-width: 160px;
+    cursor: pointer;
+}
+
+.font-select option {
+    padding: 8px;
+    font-size: 14px;
+}
+
+.font-select option[value="Inter"] { font-family: 'Inter', sans-serif; }
+.font-select option[value="Merriweather"] { font-family: 'Merriweather', serif; }
+.font-select option[value="Playfair"] { font-family: 'Playfair Display', serif; }
+.font-select option[value="Source"] { font-family: 'Source Sans Pro', sans-serif; }
+.font-select option[value="FiraCode"] { font-family: 'Fira Code', monospace; }
+.font-select option[value="RobotoMono"] { font-family: 'Roboto Mono', monospace; }
+
+/* Enhanced Sidebar Header */
+.sidebar-header {
+    padding: 24px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--sidebar-bg);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.sidebar-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sidebar-header h2 i {
+    font-size: 18px;
+    color: var(--primary-color);
+}
+
+.sidebar-header .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-button {
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-button:hover {
+    background: var(--hover-bg);
+    color: var(--text-primary);
+}
+
+.header-button i {
+    font-size: 16px;
+}
+
+/* Update the hover effect for better visual feedback */
+.sidebar-header:hover .header-button {
+    opacity: 1;
+}
+
+/* Add transition properties to elements that change during theme toggle */
+body, 
+.sidebar,
+.note-item,
+.toolbar,
+.toolbar button,
+.search-bar,
+.search-bar input,
+#note-content,
+.toolbar select,
+.note-title-edit,
+.note-date,
+.header-button,
+.font-select,
+.format-group {
+    transition: all var(--transition-speed) ease;
+}
+
+/* Add transition properties to background colors and borders */
+.sidebar,
+.toolbar,
+.search-bar,
+.note-item,
+.toolbar button,
+.search-bar input {
+    transition: background-color var(--transition-speed) ease,
+                border-color var(--transition-speed) ease,
+                color var(--transition-speed) ease;
+}
+
+/* Ensure dark theme changes are also smooth */
+[data-theme="dark"],
+.dark-theme {
+    transition: background-color var(--transition-speed) ease,
+                color var(--transition-speed) ease;
+}
+
+/* Add toggle button styles */
+.sidebar-toggle {
+    position: fixed;
+    left: 20px;
+    top: 50%; /* Change from top: 20px to top: 50% */
+    transform: translateY(-50%) translateX(-100px); /* Add translateY for vertical centering */
+    padding: 12px;
+    border-radius: 8px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    cursor: pointer;
+    z-index: 1000;
+    display: none; /* Change from opacity: 0 to display: none */
+    box-shadow: var(--shadow-md);
+}
+
+.sidebar-toggle.visible {
+    display: flex; /* Change from opacity: 1 to display: flex */
+    align-items: center;
+    justify-content: center;
+    animation: fadeInMiddle 0.3s ease;
+    transform: translateY(-50%) translateX(0); /* Update transform for visible state */
+}
+
+/* Update animation for middle positioning */
+@keyframes fadeInMiddle {
+    from { 
+        opacity: 0;
+        transform: translateY(-50%) translateX(-20px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+    }
+}
+
+.sidebar-toggle:hover {
+    background: var(--hover-bg);
+    transform: translateY(-50%) translateX(0) scale(1.05); /* Update hover transform */
+}
+
+/* Update sidebar transition */
+.sidebar {
+    transform: translateX(0);
+    transition: all var(--transition-speed) ease;
+}
+
+.sidebar.collapsed {
+    transform: translateX(-100%);
+}
+
+/* Update main content transition */
+.main-content {
+    transition: margin-left var(--transition-speed) ease;
+}
+
+/* Update root variables with additional theme colors */
+:root {
+    /* ...existing variables... */
+    --bg-primary: var(--main-bg);
+    --bg-secondary: var(--sidebar-bg);
+    --editor-bg: var(--main-bg);
+    --toolbar-bg-light: rgba(255, 255, 255, 0.95);
+    --toolbar-bg-dark: rgba(28, 28, 30, 0.95);
+}
+
+/* Enhanced Dark Theme Variables */
+[data-theme="dark"] {
+    --main-bg: #000000;
+    --sidebar-bg: #1c1c1e;
+    --bg-primary: #000000;
+    --bg-secondary: #1c1c1e;
+    --editor-bg: #1c1c1e;
+    --text-primary: #ffffff;
+    --text-secondary: #999999;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --hover-bg: rgba(255, 255, 255, 0.05);
+    --active-bg: rgba(0, 122, 255, 0.2);
+    --toolbar-bg: var(--toolbar-bg-dark);
+}
+
+/* Update component styles to use new variables */
+body {
+    background: var(--editor-bg);
+}
+
+.sidebar {
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+}
+
+.toolbar {
+    background: var(--toolbar-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.editor-container {
+    background: var(--editor-bg);
+}
+
+#note-content {
+    background: var(--editor-bg);
+    color: var(--text-primary);
+}
+
+.note-item {
+    background: transparent;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.note-item:hover {
+    background: var(--hover-bg);
+}
+
+.note-item.active {
+    background: var(--active-bg);
+}
+
+.search-bar {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.search-bar input {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.sidebar-toggle {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+/* Update transitions for smoother theme switching */
+body, 
+.sidebar,
+.toolbar,
+.editor-container,
+#note-content,
+.note-item,
+.search-bar,
+.search-bar input,
+.sidebar-toggle,
+.note-title-edit {
+    transition: all var(--transition-speed) ease;
+}
+
+/* Ensure proper text color in dark mode */
+[data-theme="dark"] .note-title-edit,
+[data-theme="dark"] .note-date,
+[data-theme="dark"] .search-bar input,
+[data-theme="dark"] #note-content {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .format-group {
+    background: var(--hover-bg);
+}
+
+[data-theme="dark"] .toolbar button {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .toolbar button:hover {
+    background: var(--hover-bg);
+}
+
+[data-theme="dark"] .font-select {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .font-select option {
+    background: var(--bg-secondary);
+    color: var (--text-primary);
+}
+
+/* Update Delete Button for Dark Mode */
+.delete-btn {
+    /* ...existing styles... */
+    color: var(--danger-color, #ff3b30);
+}
+
+[data-theme="dark"] .delete-btn {
+    color: #ff453a;
+}
+
+/* Improve Sidebar Toggle Button */
+.sidebar-toggle {
+    position: fixed;
+    left: 20px;
+    top: 50%; /* Change from top: 20px to top: 50% */
+    transform: translateY(-50%) translateX(-100px); /* Add translateY for vertical centering */
+    padding: 12px;
+    border-radius: 8px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    cursor: pointer;
+    z-index: 1000;
+    display: none; /* Change from opacity: 0 to display: none */
+    box-shadow: var(--shadow-md);
+}
+
+.sidebar-toggle.visible {
+    display: flex; /* Change from opacity: 1 to display: flex */
+    align-items: center;
+    justify-content: center;
+    animation: fadeInMiddle 0.3s ease;
+    transform: translateY(-50%) translateX(0); /* Update transform for visible state */
+}
+
+/* Update animation for middle positioning */
+@keyframes fadeInMiddle {
+    from { 
+        opacity: 0;
+        transform: translateY(-50%) translateX(-20px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+    }
+}
+
+.sidebar-toggle:hover {
+    background: var(--hover-bg);
+    transform: translateY(-50%) translateX(0) scale(1.05); /* Update hover transform */
+}
+
+/* Add font inheritance to note content and its children */
+#note-content, 
+#note-content * {
+    font-family: inherit;
+}
+
+/* Enhanced Checkbox Styles */
+.task-container {
+    display: flex;
+    align-items: flex-start;
+    padding: 4px 0;
+    margin: 4px 0;
+    gap: 8px;
+}
+
+.task-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    margin: 4px 0;
+}
+
+.task-checkbox:checked {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.task-checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    color: white;
+    font-size: 14px;
+    left: 2px;
+    top: -2px;
+}
+
+.task-text {
+    flex: 1;
+    padding: 2px 0;
+    margin: 0;
+    min-height: 24px;
+}
+
+/* Nesting Styles */
+.nested-content {
+    margin-left: 24px;
+    border-left: 2px solid var(--border-color);
+    padding-left: 12px;
+}
+
+/* Add indent buttons to toolbar */
+.indent-buttons {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: var(--hover-bg);
+    border-radius: 8px;
+}
+
+/* Add active state styles for toolbar buttons */
+.toolbar button.active {
+    background: var(--primary-light);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Styles for No Notes Wrapper */
+.no-notes-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Ensure it takes the entire screen height */
+    width: calc(100vw - var(--sidebar-width)); /* Adjust width to account for sidebar */
+    background: var(--main-bg);
+    padding: 20px;
+    box-shadow: var(--shadow-md);
+    position: absolute; /* Change to absolute positioning */
+    top: 0;
+    left: var(--sidebar-width); /* Adjust left position to account for sidebar */
+    z-index: 1; /* Ensure it appears above other content */
+    transition: left var(--transition-speed) ease, width var(--transition-speed) ease; /* Add transition for smooth adjustment */
+}
+
+.sidebar.collapsed ~ .main-content .no-notes-wrapper {
+    left: 0; /* Adjust left position when sidebar is collapsed */
+    width: 100vw; /* Adjust width when sidebar is collapsed */
+}
+
+/* Styles for No Notes Message */
+.no-notes-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-secondary);
+    background: var(--main-bg);
+    padding: 20px;
+    max-width: 600px; /* Scale down the message box */
+    width: 100%;
+    box-shadow: var(--shadow-md);
+    border-radius: 8px; /* Add slight rounding for better appearance */
+    margin: auto; /* Center the message box */
+}
+
+.no-notes-icon {
+    font-size: 4rem; /* Scale down icon size */
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.no-notes-message p {
+    font-size: 1.4rem; /* Adjust text size */
+    margin-bottom: 20px;
+    color: var(--text-primary);
+    font-weight: 500; /* Add font weight for better visibility */
+}
+
+.create-note-button {
+    padding: 10px 20px; /* Scale down button padding */
+    font-size: 1rem; /* Scale down button font size */
+    color: #fff;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.create-note-button:hover {
+    background-color: #005bb5;
+    transform: translateY(-2px);
+}
+
+/* Dark Theme Fixes for No Notes Wrapper */
+[data-theme="dark"] .no-notes-wrapper {
+    background: var(--bg-secondary);
+    box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .no-notes-message {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    box-shadow: var(--shadow-md);
+    border-radius: 8px; /* Add slight rounding for better appearance */
+    margin: auto; /* Center the message box */
+}
+
+[data-theme="dark"] .no-notes-icon {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .no-notes-message p {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .create-note-button {
+    background-color: var(--primary-color);
+}
+
+[data-theme="dark"] .create-note-button:hover {
+    background-color: #005bb5;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 250px;
+    }
+
+    .main-content {
+        margin-left: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .main-content {
+        margin-left: 0;
+        margin-top: var(--header-height);
+    }
+
+    .toolbar {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .toolbar button,
+    .toolbar select {
+        flex: 1 1 100%;
+        margin-bottom: 8px;
+    }
+
+    .editor-container {
+        padding: 20px;
+    }
+
+    #note-content {
+        padding: 10px 20px;
+    }
+
+    .sidebar-toggle {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .toolbar button,
+    .toolbar select {
+        width: 100%;
+    }
+
+    .note-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .note-title-edit {
+        width: 100%;
+    }
+
+    .note-date {
+        margin-top: 4px;
+    }
+}
+
+/* Ensure the sidebar toggle button is hidden on smaller screens */
+@media (max-width: 768px) {
+    .sidebar-toggle {
+        display: none;
+    }
+}
+
+/* Automatically calculate sidebar width */
+@media (min-width: 769px) {
+    .sidebar {
+        width: var(--sidebar-width);
+    }
+
+    .main-content {
+        margin-left: var(--sidebar-width);
+    }
+}
+
+/* Fix gap issue when sidebar is disabled */
+.sidebar.collapsed {
+    width: 0;
+    transform: translateX(-100%);
+}
+
+.main-content.collapsed {
+    margin-left: 0;
+    width: 100%; /* Ensure the main content takes full width */
+}
+
+/* Synchronize transitions */
+.sidebar,
+.main-content {
+    transition: all var(--transition-speed) ease;
+}
