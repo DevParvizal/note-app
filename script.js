@@ -240,7 +240,7 @@ function downloadNote() {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${note.title}.txt`;
+    a.download = `${note.title}.html`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
