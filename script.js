@@ -581,4 +581,5 @@ document.getElementById('editor-container').addEventListener('click', (event) =>
 
 // Initialize AI on page load
 document.addEventListener('DOMContentLoaded', () => {
-   
+    initializeAI();
+});
