@@ -523,9 +523,18 @@ document.addEventListener('keydown', function(event) {
 let aiModel;
 
 async function initializeAI() {
+    if (typeof puter === 'undefined') {
+        console.error('Puter.js library is not loaded. Please check the CDN link.');
+        return;
+    }
     aiModel = await puter.loadModel('gpt-3.5', { version: '2.0' }); // Load the AI model with v2
     console.log('AI model (v2) loaded successfully');
 }
+
+// Initialize AI on page load
+document.addEventListener('DOMContentLoaded', () => {
+    initializeAI();
+});
 
 // Provide AI suggestions while typing
 document.getElementById('note-content').addEventListener('input', async (event) => {
