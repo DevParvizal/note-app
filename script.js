@@ -240,7 +240,7 @@ function downloadNote() {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${note.title}.html`;
+    a.download = `${note.title}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -517,4 +517,59 @@ document.addEventListener('keydown', function(event) {
                 break;
         }
     }
+});
+
+// Initialize AI suggestions using puter.js v2
+let aiModel;
+
+async function initializeAI() {
+    aiModel = await puter.loadModel('gpt-3.5', { version: '2.0' }); // Load the AI model with v2
+    console.log('AI model (v2) loaded successfully');
+}
+
+// Provide AI suggestions while typing
+document.getElementById('note-content').addEventListener('input', async (event) => {
+    const content = event.target.innerText;
+    if (content.trim().length > 0 && aiModel) {
+        const suggestions = await aiModel.predict(content, { maxTokens: 20, temperature: 0.7 });
+        showAISuggestions(suggestions.text); // Adjusted for v2 response format
+    } else {
+        hideAISuggestions();
+    }
+});
+
+// Show AI suggestions
+function showAISuggestions(suggestions) {
+    let suggestionBox = document.getElementById('ai-suggestions');
+    if (!suggestionBox) {
+        suggestionBox = document.createElement('div');
+        suggestionBox.id = 'ai-suggestions';
+        suggestionBox.className = 'ai-suggestions';
+        document.getElementById('editor-container').appendChild(suggestionBox);
+    }
+    suggestionBox.innerText = suggestions;
+    suggestionBox.style.display = 'block';
+}
+
+// Hide AI suggestions
+function hideAISuggestions() {
+    const suggestionBox = document.getElementById('ai-suggestions');
+    if (suggestionBox) {
+        suggestionBox.style.display = 'none';
+    }
+}
+
+// Accept AI suggestion
+document.getElementById('editor-container').addEventListener('click', (event) => {
+    if (event.target.id === 'ai-suggestions') {
+        const suggestion = event.target.innerText;
+        const noteContent = document.getElementById('note-content');
+        noteContent.innerText += ` ${suggestion}`;
+        hideAISuggestions();
+    }
+});
+
+// Initialize AI on page load
+document.addEventListener('DOMContentLoaded', () => {
+    initializeAI();
 });
