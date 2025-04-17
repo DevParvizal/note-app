@@ -1128,6 +1128,27 @@ body,
     background-color: #005bb5;
 }
 
+/* AI Suggestions Box */
+.ai-suggestions {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 14px;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: none;
+    cursor: pointer;
+}
+
+.ai-suggestions:hover {
+    background: #e9e9e9;
+}
+
 /* Responsive Styles */
 @media (max-width: 1024px) {
     .sidebar {
