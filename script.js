@@ -524,7 +524,8 @@ let aiModel;
 
 async function initializeAI() {
     if (typeof puter === 'undefined') {
-        console.error('Puter.js library is not loaded. Please check the CDN link.');
+        console.error('Puter.js library is not loaded. Retrying...');
+        setTimeout(initializeAI, 1000); // Retry after 1 second
         return;
     }
     aiModel = await puter.loadModel('gpt-3.5', { version: '2.0' }); // Load the AI model with v2
@@ -580,5 +581,4 @@ document.getElementById('editor-container').addEventListener('click', (event) =>
 
 // Initialize AI on page load
 document.addEventListener('DOMContentLoaded', () => {
-    initializeAI();
-});
+   
